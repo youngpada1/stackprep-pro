@@ -262,6 +262,90 @@ def save_study_pack(session_id: str, name: str, content: str) -> str:
 
 
 @mcp.tool()
+def list_sessions() -> str:
+    """List all saved sessions (pending and completed).
+
+    IMPORTANT: Call this at the start of every new conversation before doing anything else.
+    If there are pending (non-ended) sessions, ask the user whether they want to resume one
+    or start a new session. Use resume_session(session_id) to continue a pending session.
+    """
+    sessions_dir = _sessions_dir()
+    files = sorted(sessions_dir.glob("*.json"), key=lambda f: f.stat().st_mtime, reverse=True)
+    if not files:
+        return "No saved sessions found. Use start_session to begin."
+
+    lines = [f"Saved sessions ({len(files)}):\n"]
+    for f in files:
+        try:
+            data = json.loads(f.read_text(encoding="utf-8"))
+            session_id = f.stem
+            mode = data.get("mode", "?")
+            cert = data.get("cert_name", "")
+            score = data.get("score", {})
+            ended = data.get("ended", False)
+            status = "completed" if ended else "IN PROGRESS"
+            label = f"{mode}" + (f" — {cert}" if cert else "")
+            lines.append(
+                f"  • {session_id}  [{label}]  "
+                f"score: {score.get('correct','?')}/{score.get('total','?')}  [{status}]"
+            )
+        except Exception:
+            lines.append(f"  • {f.stem}  [unreadable]")
+
+    pending = sum(
+        1 for f in files
+        if not json.loads(f.read_text(encoding="utf-8")).get("ended", False)
+    )
+    if pending:
+        lines.append(f"\n{pending} session(s) in progress — use resume_session(session_id) to continue one.")
+    return "\n".join(lines)
+
+
+@mcp.tool()
+def resume_session(session_id: str) -> str:
+    """Resume a previously saved session. Returns full session state and skill rules.
+
+    Args:
+        session_id: The session ID to resume (from list_sessions)
+    """
+    session = _restore_session(session_id)
+    if not session:
+        return f"ERROR: No session found with ID '{session_id}'. Use list_sessions to see available sessions."
+    if session.get("ended"):
+        return f"ERROR: Session '{session_id}' has already ended. Use start_session to begin a new one."
+
+    mode = session["mode"]
+    skill = _load_skill(mode)
+    score = session["score"]
+    cert = session.get("cert_name", "")
+    q_num = session.get("q_num", 0)
+    auto_flagged = session.get("auto_flagged", [])
+
+    context_lines = [
+        f"Session ID: {session_id}",
+        f"Mode: {mode}",
+    ]
+    if cert:
+        context_lines.append(f"Certification: {cert}")
+    context_lines += [
+        f"Questions answered so far: {q_num}",
+        f"Score so far: {score['correct']}/{score['total']} "
+        f"({score['incorrect']} incorrect, {score['partial']} partial)",
+    ]
+    if auto_flagged:
+        context_lines.append("Topics flagged for study so far:")
+        for t in auto_flagged:
+            context_lines.append(f"  • {t}")
+
+    return "\n".join([
+        "=== STACKPREP SESSION RESUMED ===",
+        "\n".join(context_lines),
+        "\n=== SKILL RULES (follow these exactly) ===",
+        skill,
+    ])
+
+
+@mcp.tool()
 def list_study_packs() -> str:
     """List all saved study packs."""
     packs = _packs_dir()

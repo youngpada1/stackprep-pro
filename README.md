@@ -114,6 +114,8 @@ export STACKPREP_MODEL="google/gemini-2.5-pro"
 | `flag_for_study` | Manually flag the current question for the study pack. | `session_id`, `question` |
 | `end_session` | End the session. Returns the score and flagged topics so the AI can generate a study plan and study pack. | `session_id` |
 | `save_study_pack` | Save the study pack content to disk. | `session_id`, `name`, `content` |
+| `list_sessions` | List all saved sessions (pending and completed). |  |
+| `resume_session` | Resume a previously saved session. Returns full session state and skill rules. | `session_id` |
 | `list_study_packs` | List all saved study packs. |  |
 | `load_study_pack` | Load a previously saved study pack by name. | `name` |
 
