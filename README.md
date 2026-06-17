@@ -1,16 +1,16 @@
-# stackprep-mcp
+# stackprep-pro
 
-> stackprep as an MCP server — interview & certification prep for any AI client
+> stackprep-pro — interview & certification prep MCP server for any AI client
 
 Works with **any MCP-compatible client** — Claude Code, Cursor, Cline, Windsurf, Continue.dev, Codex CLI, and any other client that supports the Model Context Protocol. No API key required — your existing AI subscription does the work.
 
-Available on PyPI: `uvx stackprep-mcp`
+Available on PyPI: `uvx stackprep-pro`
 
 ---
 
 ## What it does
 
-stackprep-mcp is a pure state-management MCP server. It tracks your session and study packs on disk; your AI client (Claude, Cursor, Codex, etc.) handles all the question generation and scoring logic using the skill rules returned at session start.
+stackprep-pro is a pure state-management MCP server. It tracks your session and study packs on disk; your AI client (Claude, Cursor, Codex, etc.) handles all the question generation and scoring logic using the skill rules returned at session start.
 
 - One question at a time — interview or certification mode
 - Instant scoring with doc links after every answer
@@ -23,7 +23,7 @@ stackprep-mcp is a pure state-management MCP server. It tracks your session and 
 ## Install
 
 ```bash
-uvx stackprep-mcp
+uvx stackprep-pro
 ```
 
 > Requires [uv](https://docs.astral.sh/uv/). Install it with `curl -LsSf https://astral.sh/uv/install.sh | sh`.
@@ -32,7 +32,7 @@ uvx stackprep-mcp
 
 ## Configure your MCP client
 
-The config is the same for every client — just point to `uvx stackprep-mcp`.
+The config is the same for every client — just point to `uvx stackprep-pro`.
 
 ### Claude Code
 
@@ -43,7 +43,7 @@ Create `.mcp.json` in your project root:
   "mcpServers": {
     "stackprep": {
       "command": "uvx",
-      "args": ["stackprep-mcp"]
+      "args": ["stackprep-pro"]
     }
   }
 }
@@ -58,7 +58,7 @@ Create `~/.cursor/mcp.json`:
   "mcpServers": {
     "stackprep": {
       "command": "uvx",
-      "args": ["stackprep-mcp"]
+      "args": ["stackprep-pro"]
     }
   }
 }
@@ -75,7 +75,7 @@ mcpServers:
   stackprep:
     command: uvx
     args:
-      - stackprep-mcp
+      - stackprep-pro
 ```
 
 ### Any other MCP-compatible client
@@ -87,7 +87,7 @@ The pattern is always the same:
   "mcpServers": {
     "stackprep": {
       "command": "uvx",
-      "args": ["stackprep-mcp"]
+      "args": ["stackprep-pro"]
     }
   }
 }
@@ -132,8 +132,8 @@ Point this at any Dropbox, Google Drive, or OneDrive folder for cross-platform s
 
 | Mode | Description |
 |---|---|
-| `certification` | description: Certification prep skill for the stackprep MCP server. Activated when mode is "certification". Drives question generation, scoring, adaptive difficulty, and study pack creation. |
-| `interview` | description: Interview prep skill for the stackprep MCP server. Activated when mode is "interview". Drives question generation, scoring, adaptive difficulty, and study pack creation. |
+| `certification` | description: Certification prep skill for the stackprep-pro MCP server. Activated when mode is "certification". Drives question generation, scoring, adaptive difficulty, and study pack creation. |
+| `interview` | description: Interview prep skill for the stackprep-pro MCP server. Activated when mode is "interview". Drives question generation, scoring, adaptive difficulty, and study pack creation. |
 
 ---
 
@@ -206,8 +206,8 @@ For Claude Projects or direct Claude.ai use, the behaviour rules are also availa
 ## Contributing / Development
 
 ```bash
-git clone https://github.com/youngpada1/stackprep-mcp
-cd stackprep-mcp
+git clone https://github.com/youngpada1/stackprep-pro
+cd stackprep-pro
 
 # Install dependencies
 uv sync
@@ -216,10 +216,10 @@ uv sync
 git config core.hooksPath .githooks
 
 # Run the server locally
-uv run stackprep-mcp
+uv run stackprep-pro
 ```
 
-The README is auto-generated from `server.py` tool definitions and the skills files in `src/stackprep_mcp/skills/`.
+The README is auto-generated from `server.py` tool definitions and the skills files in `src/stackprep_pro/skills/`.
 To regenerate manually:
 
 ```bash

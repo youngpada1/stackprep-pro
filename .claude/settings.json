@@ -2,7 +2,7 @@
   "mcpServers": {
     "stackprep": {
       "command": "uvx",
-      "args": ["stackprep-mcp"]
+      "args": ["stackprep-pro"]
     }
   }
 }

@@ -9,7 +9,7 @@ from typing import Any
 
 from mcp.server.fastmcp import FastMCP
 
-mcp = FastMCP("stackprep")
+mcp = FastMCP("stackprep-pro")
 
 SKILLS_DIR = Path(__file__).parent / "skills"
 
@@ -120,7 +120,7 @@ def start_session(
         context_lines.append(f"\n--- Job description ---\n{jd}")
 
     return "\n".join([
-        "=== STACKPREP SESSION STARTED ===",
+        "=== STACKPREP PRO SESSION STARTED ===",
         "\n".join(context_lines),
         "\n=== SKILL RULES (follow these exactly) ===",
         skill,
@@ -338,7 +338,7 @@ def resume_session(session_id: str) -> str:
             context_lines.append(f"  • {t}")
 
     return "\n".join([
-        "=== STACKPREP SESSION RESUMED ===",
+        "=== STACKPREP PRO SESSION RESUMED ===",
         "\n".join(context_lines),
         "\n=== SKILL RULES (follow these exactly) ===",
         skill,

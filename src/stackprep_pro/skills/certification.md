@@ -1,9 +1,9 @@
 ---
-name: stackprep-certification
-description: Certification prep skill for the stackprep MCP server. Activated when mode is "certification". Drives question generation, scoring, adaptive difficulty, and study pack creation.
+name: stackprep-pro-certification
+description: Certification prep skill for the stackprep-pro MCP server. Activated when mode is "certification". Drives question generation, scoring, adaptive difficulty, and study pack creation.
 ---
 
-# stackprep — Certification Mode
+# stackprep-pro — Certification Mode
 
 Adaptive certification exam prep — one question at a time, with instant feedback and doc links.
 

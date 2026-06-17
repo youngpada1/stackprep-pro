@@ -722,7 +722,7 @@ wheels = [
 ]
 
 [[package]]
-name = "stackprep-mcp"
+name = "stackprep-pro"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

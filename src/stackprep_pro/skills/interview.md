@@ -1,9 +1,9 @@
 ---
-name: stackprep-interview
-description: Interview prep skill for the stackprep MCP server. Activated when mode is "interview". Drives question generation, scoring, adaptive difficulty, and study pack creation.
+name: stackprep-pro-interview
+description: Interview prep skill for the stackprep-pro MCP server. Activated when mode is "interview". Drives question generation, scoring, adaptive difficulty, and study pack creation.
 ---
 
-# stackprep — Interview Mode
+# stackprep-pro — Interview Mode
 
 Adaptive technical interview prep — one question at a time, with instant feedback and doc links.
 
