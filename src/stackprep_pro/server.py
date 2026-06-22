@@ -81,7 +81,7 @@ def start_session(
 
     Args:
         mode: "interview" or "certification"
-        cert_name: For certification mode — the exam name (e.g. "AWS SAA-C03")
+        cert_name: For certification mode — the exam name exactly as the user typed it (e.g. "AWS SAA-C03"). NEVER modify, correct, or substitute the cert name — use the user's exact input verbatim.
         cv: For interview mode — the user's CV/resume text
         jd: For interview mode — the job description text
         extra_topics: Optional comma-separated extra topics to focus on
