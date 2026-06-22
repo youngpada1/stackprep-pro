@@ -106,6 +106,7 @@ def start_session(
     _sessions[session_id] = {
         "mode": mode,
         "cert_name": cert_name,
+        "session_name": "",
         "extra_topics": extra_topics,
         "q_num": 0,
         "score": {"correct": 0, "partial": 0, "incorrect": 0, "total": 0},
@@ -195,6 +196,44 @@ def flag_for_study(session_id: str, question: str = "") -> str:
 
 
 @mcp.tool()
+def save_session(session_id: str, session_name: str) -> str:
+    """Save an in-progress session so the user can continue it later.
+
+    Use this when the user wants to PAUSE and continue later (not finish). This is separate
+    from saving a study pack. Works the same in interview and certification mode.
+
+    FLOW (do this before calling): ask the user "Do you want to save this session to continue
+    later? (y/n)". If yes, ask "What would you like to name this session?" and pass that as
+    session_name. The user MUST name it — never auto-generate. This name is what appears when
+    they later choose to continue a saved session.
+
+    Args:
+        session_id: The session ID
+        session_name: The unique name the user chose for this session
+    """
+    session = _sessions.get(session_id) or _restore_session(session_id)
+    if not session:
+        return f"ERROR: No session found with ID '{session_id}'."
+    if not session_name.strip():
+        return "ERROR: session_name is required — ask the user to name this session."
+
+    name = session_name.strip()
+    for f in _sessions_dir().glob("*.json"):
+        if f.stem == session_id:
+            continue
+        try:
+            other = json.loads(f.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if other.get("session_name", "").lower() == name.lower():
+            return f"ERROR: A session named '{name}' already exists. Ask the user for a different name."
+
+    session["session_name"] = name
+    _persist_session(session_id)
+    return f"Session saved as '{name}'. You can continue it later."
+
+
+@mcp.tool()
 def end_session(session_id: str) -> str:
     """End the session. Returns the score and flagged topics so the AI can generate a study plan and study pack.
 
@@ -221,10 +260,14 @@ def end_session(session_id: str) -> str:
         "Auto-detected study topics:",
         topics_list,
         "",
-        "Generate a Study Plan now (see skill rules), then:",
-        '  1. Ask the user: "Want to add any extra topics to your study pack before I save it?"',
-        '  2. Ask the user: "What would you like to name this study pack? (e.g. snowpro-core-week1)"',
-        '  3. Call save_study_pack(session_id=\'{}\', name=<name the user chose>, content=<generated pack>)'.format(session_id),
+        "Now (this flow is identical for interview and certification mode):",
+        '  1. Ask the user: "Do you want to save a study pack from this session? (y/n)"',
+        "  2. If NO: stop here. Nothing is saved.",
+        "  3. If YES:",
+        '       a. Ask: "Want to add any extra topics to your study pack before I save it?"',
+        '       b. Ask: "What would you like to name this study pack? (e.g. snowpro-core-week1)"',
+        "       c. Generate the Study Plan and study pack (see skill rules).",
+        "       d. Call save_study_pack(session_id='{}', name=<pack name the user chose>, content=<generated pack>)".format(session_id),
     ])
 
 
@@ -285,10 +328,12 @@ def list_sessions() -> str:
             session_id = f.stem
             mode = data.get("mode", "?")
             cert = data.get("cert_name", "")
+            name = data.get("session_name", "")
             score = data.get("score", {})
             ended = data.get("ended", False)
             status = "completed" if ended else "IN PROGRESS"
-            label = f"{mode}" + (f" — {cert}" if cert else "")
+            # Prefer the user-given session name; fall back to mode/cert if unnamed.
+            label = name or (f"{mode}" + (f" — {cert}" if cert else ""))
             lines.append(
                 f"  • {session_id}  [{label}]  "
                 f"score: {score.get('correct','?')}/{score.get('total','?')}  [{status}]"

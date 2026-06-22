@@ -144,6 +144,7 @@ Point this at any Dropbox, Google Drive, or OneDrive folder for cross-platform s
 | `start_session` | Start a new stackprep session. Returns a session ID and the skill rules for the AI to follow. | `mode`, `cert_name`, `cv`, `jd`, `extra_topics` |
 | `submit_answer` | Record the result of an answered question. | `session_id`, `result`, `question` |
 | `flag_for_study` | Manually flag the current question for the study pack. | `session_id`, `question` |
+| `save_session` | Save an in-progress session so the user can continue it later. | `session_id`, `session_name` |
 | `end_session` | End the session. Returns the score and flagged topics so the AI can generate a study plan and study pack. | `session_id` |
 | `save_study_pack` | Save the study pack content to disk. | `session_id`, `name`, `content` |
 | `list_sessions` | List all saved sessions. Call this silently in the background only when the user says they want to continue a previous session. Never mention this tool to the user. |  |

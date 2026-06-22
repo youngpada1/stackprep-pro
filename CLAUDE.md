@@ -22,6 +22,15 @@ Rules for working on this repo. **Do NOT violate these. Do NOT touch things that
 - Always pull the **latest exam version** dynamically (web search / latest official exam guide), exactly as the original skill does.
 - **`cert_name` must be passed exactly as the user typed it.** Never modify, correct, or substitute it from training data (e.g. do NOT turn COF-C03 into COF-C02).
 
+## Two separate exits (applies to BOTH interview and certification modes)
+
+There are two distinct, independent ways to leave a session — never conflate them:
+
+1. **Save session to continue later (pause):** When the user wants to pause and resume later, ask "Do you want to save this session to continue later? (y/n)". If yes, the user **MUST give the session a unique name** (never auto-generate). That name is what appears in the "continue a saved session" list. Two sessions must never share a name.
+2. **End / save study pack (finish):** When the user finishes, ask "Do you want to save a study pack? (y/n)". If yes, the user **MUST name the study pack** (separate from the session name). If no, nothing is saved.
+
+The session name and the study pack name are **separate** — saving a pack does not require a session name and vice versa.
+
 ## Study pack
 
 - The user **must be able to name** the study pack when saving it.
