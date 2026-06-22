@@ -79,6 +79,14 @@ def start_session(
 ) -> str:
     """Start a new stackprep session. Returns a session ID and the skill rules for the AI to follow.
 
+    STARTUP FLOW (follow exactly, in plain language — never show tool or field names to the user):
+    1. First ask: "Are you prepping for a technical interview or a certification exam?"
+    2. After they choose, check for saved sessions of that mode (call list_sessions silently).
+       - If matching saved sessions exist, ask: "Do you want to continue a saved session or start a new one?"
+         and list the saved sessions by the name the user gave them.
+       - If none exist, just proceed to start a new session.
+    3. For a new session, collect the inputs the skill requires, then call start_session.
+
     Args:
         mode: "interview" or "certification"
         cert_name: For certification mode — the exam name exactly as the user typed it (e.g. "AWS SAA-C03"). NEVER modify, correct, or substitute the cert name — use the user's exact input verbatim.
@@ -343,7 +351,7 @@ def resume_session(session_id: str) -> str:
 
 @mcp.tool()
 def list_study_packs() -> str:
-    """List all saved study packs."""
+    """List all saved study packs. Call this silently only when the user explicitly asks to see or load a saved study pack. Never call this on startup or automatically. Never mention this tool to the user."""
     packs = _packs_dir()
     files = sorted(packs.glob("*.json"))
     if not files:
