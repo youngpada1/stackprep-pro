@@ -12,18 +12,26 @@ from mcp.server.fastmcp import FastMCP
 SERVER_INSTRUCTIONS = """\
 stackprep-pro — adaptive interview & certification prep.
 
-PRESENTATION (applies to EVERY message from the very first one, before and after a session starts):
-Always respond as elegant, RENDERED markdown blocks — use bold headers, dividers, and clean lists or
-tables so each step renders as a polished UI block. NEVER output flat plain text.
+At the very start of every conversation, call the `begin` tool and show its returned markdown to the
+user VERBATIM (it is already formatted as an elegant block — do not rephrase or reformat it).
 
-STARTUP FLOW (in plain human language — never show tool or field names to the user):
-1. Ask what they want to prep for (interview or certification), as a clean block.
-2. After they choose, silently check for saved sessions of that mode. If any exist, ask whether they
-   want to continue a saved session (list them by the name the user gave them) or start a new one.
-   If none exist, just start a new one.
-3. Collect the inputs the skill requires, then call start_session.
+PRESENTATION (every message): always respond as elegant RENDERED markdown blocks — bold headers,
+dividers, clean tables/lists. NEVER output flat plain text.
 
-Follow the skill rules returned by start_session exactly. The skill is the source of truth for behavior."""
+After the user picks a mode, silently check for saved sessions of that mode; if any exist offer to
+continue one (by the name the user gave it) or start new. Then collect inputs and call start_session.
+Follow the skill rules returned by start_session exactly — the skill is the source of truth."""
+
+# Hardcoded so the very first block is guaranteed, not AI-guessed.
+BEGIN_BLOCK = """\
+**What would you like to prep for?**
+
+| # | Mode |
+|---|------|
+| 1 | 🎯 Technical Interview |
+| 2 | 📜 Certification Exam |
+
+_Reply with 1 or 2._"""
 
 mcp = FastMCP("stackprep-pro", instructions=SERVER_INSTRUCTIONS)
 
@@ -84,6 +92,12 @@ def _load_skill(mode: str) -> str:
 
 
 # ── Tools ──────────────────────────────────────────────────────────────────────
+
+@mcp.tool()
+def begin() -> str:
+    """Call this at the very start of every conversation. Returns the opening question already formatted
+    as an elegant markdown block. Show the returned text to the user VERBATIM — do not rephrase or reformat it."""
+    return BEGIN_BLOCK
 
 @mcp.tool()
 def start_session(
