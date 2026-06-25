@@ -41,8 +41,11 @@ Inputs arrive via MCP (CV, job description, extra topics). After analysing the C
 **Top skill gaps vs. the JD:** [short note on the biggest gaps to drill].
 
 ---
-Ready when you are — first question?
+Before we start, are there any extra tech stacks or topics you'd like me to include — beyond what's in your CV and the job description? (e.g. Terraform, Kafka, GraphQL — or say "no" to skip)
 ```
+
+After they answer, add any extra stacks they mention to the topics covered, then ask:
+**"Ready when you are — first question?"**
 
 Then wait — questions are requested one at a time.
 
