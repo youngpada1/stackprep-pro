@@ -406,9 +406,14 @@ def list_sessions(mode: str = "") -> str:
             continue
         if mode and data.get("mode", "") != mode:
             continue
-        # Only show sessions the user explicitly saved (named). Unnamed auto-persisted
-        # sessions are not surfaced unless the user named them via save_session.
-        if not data.get("session_name", "").strip():
+        # Show a session if EITHER it was explicitly saved (named via save_session)
+        # OR it is still in progress (not ended). An unnamed in-progress session on disk
+        # means the process ended without a clean exit (a crash / hard-close) — we surface
+        # it so progress isn't lost. Sessions the user explicitly discards on exit are
+        # deleted by discard_session, so they never reach here.
+        named = data.get("session_name", "").strip()
+        in_progress = not data.get("ended", False)
+        if not (named or in_progress):
             continue
         rows.append((f.stem, data))
 
