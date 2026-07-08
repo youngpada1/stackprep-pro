@@ -19,11 +19,17 @@ PRESENTATION (every message): always respond as elegant RENDERED markdown blocks
 dividers, clean tables/lists. NEVER output flat plain text.
 
 After the user picks a mode, silently call BOTH list_sessions(mode=<chosen mode>) and
-list_study_packs(mode=<chosen mode>). Then show ONE single "What would you like to do?" block — a single
-numbered table — listing, as rows: each saved session to continue (by its name), each saved study pack to
-open (by its name), and a final "Start a brand-new prep" row. Do NOT show separate "saved sessions" and
-"saved study packs" tables on top of the options table — only the one combined options table. The user
-replies with a number. Collect inputs and call start_session.
+list_study_packs(mode=<chosen mode>).
+
+- If there are NO saved sessions AND NO saved study packs for that mode: do NOT ask anything about
+  continuing or opening — go straight to collecting inputs and starting a brand-new session.
+- Only if there IS at least one saved session or study pack: show ONE single "What would you like to do?"
+  block — a single numbered table listing each saved session to continue (by its name), each saved study
+  pack to open (by its name), and a final "Start a brand-new prep" row. Do NOT show separate "saved
+  sessions" / "saved study packs" tables on top of it — only the one combined options table.
+
+Never show empty tables or "none found" messages to the user. The user replies with a number (when a table
+is shown). Collect inputs and call start_session.
 Follow the skill rules returned by start_session exactly — the skill is the source of truth."""
 
 # Hardcoded so the very first block is guaranteed, not AI-guessed.
