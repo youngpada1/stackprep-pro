@@ -723,7 +723,7 @@ wheels = [
 
 [[package]]
 name = "stackprep-pro"
-version = "0.2.24"
+version = "0.2.25"
 source = { editable = "." }
 dependencies = [
     { name = "mcp", extra = ["cli"] },
