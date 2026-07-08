@@ -98,11 +98,28 @@ uvx stackprep-pro
 
 ## Configure your MCP client
 
-The config is the same for every client — just point to `uvx stackprep-pro`.
+The config is the same for every client — just point to `uvx stackprep-pro`. No API keys, no
+authentication, no accounts — stackprep stores everything as plain files on your own machine.
+
+> **Prerequisite:** install [uv](https://docs.astral.sh/uv/) (it provides `uvx`):
+> ```bash
+> curl -LsSf https://astral.sh/uv/install.sh | sh
+> ```
 
 ### Claude Code
 
-Create `.mcp.json` in your project root:
+**Recommended — register it globally** so it works from any directory (the normal way you'd use it):
+
+```bash
+claude mcp add stackprep --scope user -- uvx stackprep-pro
+```
+
+Then launch Claude Code from anywhere with `claude` and type `start`.
+
+<details>
+<summary>Alternative: per-project config</summary>
+
+If you'd rather scope it to a single project, create `.mcp.json` in that project's root instead:
 
 ```json
 {{
@@ -114,10 +131,11 @@ Create `.mcp.json` in your project root:
   }}
 }}
 ```
+</details>
 
 ### Cursor
 
-Create `~/.cursor/mcp.json`:
+Create `~/.cursor/mcp.json` (global — works from any directory):
 
 ```json
 {{
