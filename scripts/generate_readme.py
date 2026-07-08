@@ -114,7 +114,9 @@ authentication, no accounts — stackprep stores everything as plain files on yo
 claude mcp add stackprep --scope user -- uvx stackprep-pro
 ```
 
-Then launch Claude Code from anywhere with `claude` and type `start`.
+Then just run `claude` from anywhere. Claude Code works as normal — stackprep stays out of the way until
+you want it. To start a prep session, type **`stackprep-pro`** (or ask to prep for an interview or
+certification). You can also register it per-project instead of globally; both work and can coexist.
 
 <details>
 <summary>Alternative: per-project config</summary>

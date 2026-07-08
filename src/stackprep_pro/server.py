@@ -12,8 +12,10 @@ from mcp.server.fastmcp import FastMCP
 SERVER_INSTRUCTIONS = """\
 stackprep-pro — adaptive interview & certification prep.
 
-At the very start of every conversation, call the `begin` tool and show its returned markdown to the
-user VERBATIM (it is already formatted as an elegant block — do not rephrase or reformat it).
+Do NOT engage stackprep on your own. Stay a normal assistant unless the user explicitly triggers it.
+ONLY when the user types "stackprep-pro", "stackprep", or clearly asks to start interview/certification
+prep, call the `begin` tool and show its returned markdown to the user VERBATIM (it is already formatted
+as an elegant block — do not rephrase or reformat it). Until then, behave exactly like normal Claude.
 
 PRESENTATION (every message): always respond as elegant RENDERED markdown blocks — bold headers,
 dividers, clean tables/lists. NEVER output flat plain text.
