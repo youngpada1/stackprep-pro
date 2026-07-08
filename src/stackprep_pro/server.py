@@ -128,8 +128,11 @@ def _load_skill(mode: str) -> str:
 
 @mcp.tool()
 def begin() -> str:
-    """Call this at the very start of every conversation. Returns the opening question already formatted
-    as an elegant markdown block. Show the returned text to the user VERBATIM — do not rephrase or reformat it."""
+    """Start a stackprep prep session. Call this ONLY when the user explicitly triggers stackprep — i.e.
+    they type "stackprep-pro", "stackprep", or clearly ask to start interview/certification prep. Do NOT
+    call this automatically, on launch, or at the start of a conversation. Until the user triggers it,
+    behave as a normal assistant. Returns the opening question as an elegant markdown block — show it to the
+    user VERBATIM (do not rephrase or reformat)."""
     return BEGIN_BLOCK
 
 @mcp.tool()

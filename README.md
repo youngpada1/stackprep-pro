@@ -161,7 +161,7 @@ Point this at any Dropbox, Google Drive, or OneDrive folder for cross-platform s
 
 | Tool | Description | Args |
 |---|---|---|
-| `begin` | Call this at the very start of every conversation. Returns the opening question already formatted |  |
+| `begin` | Start a stackprep prep session. Call this ONLY when the user explicitly triggers stackprep — i.e. |  |
 | `start_session` | Start a new stackprep session. Returns a session ID and the skill rules for the AI to follow. | `mode`, `cert_name`, `cv`, `jd`, `extra_topics` |
 | `submit_answer` | Record the result of an answered question. | `session_id`, `result`, `question` |
 | `flag_for_study` | Manually flag the current question for the study pack. | `session_id`, `question` |
