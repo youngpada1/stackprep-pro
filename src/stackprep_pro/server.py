@@ -28,6 +28,14 @@ numbered table — listing, as rows: each saved session to continue (by its name
 open (by its name), and a final "Start a brand-new prep" row. Do NOT show separate "saved sessions" and
 "saved study packs" tables on top of the options table — only the one combined options table. The user
 replies with a number. Collect inputs and call start_session.
+
+INPUTS — ask for EXACTLY these and nothing else (no forms, no extra fields like role, company, seniority,
+tech stack or session name — the session is named only later, when the user saves it):
+- Interview mode: the user's CV and the job description. BOTH are MANDATORY. Ask the user to paste each.
+  If either is missing, ask again — never call start_session without both, never invent or placeholder them.
+  (If the user has a saved interview session, they may instead reuse its CV and JD.)
+- Certification mode: only the exact certification name, as the user typed it.
+Extra tech stacks/topics are asked later by the skill and are optional.
 Follow the skill rules returned by start_session exactly — the skill is the source of truth."""
 
 # Hardcoded so the very first block is guaranteed, not AI-guessed.
@@ -153,7 +161,12 @@ def start_session(
        - If matching saved sessions exist, ask: "Do you want to continue a saved session or start a new one?"
          and list the saved sessions by the name the user gave them, as a clean markdown list block.
        - If none exist, just proceed to start a new session.
-    3. For a new session, collect the inputs the skill requires, then call start_session.
+    3. For a new session, collect the inputs below, then call start_session. Ask for EXACTLY these — no
+       forms and no extra fields (role, company, seniority, tech stack, session name):
+       - Interview mode: the user's CV and the job description. BOTH are MANDATORY — ask the user to
+         paste each. If either is missing, ask again; never call start_session without both and never
+         invent or use placeholder text.
+       - Certification mode: only the exact certification name, as the user typed it.
 
     Args:
         mode: "interview" or "certification"
