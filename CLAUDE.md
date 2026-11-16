@@ -16,6 +16,8 @@ Rules for working on this repo. **Do NOT violate these. Do NOT touch things that
 3. **Never expose backend tool names** to the user (no "list_sessions", "start_session", "list_study_packs", etc.). Use natural language only.
 4. **Never auto-call** `list_sessions` or `list_study_packs` on startup. Call them silently in the background **only** when the user explicitly asks to continue/load.
 
+5. **No per-question continue prompts.** The session continues until the user types `end` (never `X` — it closes the CLI). Every question shows the footer: "Reply with your answer to continue · type end to finish · S to save a study pack".
+
 ## Certification exam version
 
 - **Never hardcode exam versions** (e.g. do NOT hardcode "SnowPro Core = COF-C03"). It must work for **ANY** certification.

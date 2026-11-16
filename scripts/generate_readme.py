@@ -79,6 +79,7 @@ Available on PyPI: `uvx stackprep-pro`
 stackprep-pro is a pure state-management MCP server. It tracks your session and study packs on disk; your AI client (Claude, Cursor, Codex, etc.) handles all the question generation and scoring logic using the skill rules returned at session start.
 
 - One question at a time — interview or certification mode
+- Continuous flow — the next question follows every answer automatically, no "continue? (y/n)" prompts
 - Instant scoring with doc links after every answer
 - Auto-detects wrong/partial answers and builds a named study pack
 - Sessions and study packs saved to disk — resume anytime, sync via iCloud
@@ -180,6 +181,21 @@ The pattern is always the same:
 ```
 
 Paste this into whatever config format your client uses (Cline, Windsurf, Continue.dev, etc.).
+
+---
+
+## How a session works
+
+Once a session starts, it keeps going until **you** end it — there is nothing to confirm between questions.
+
+- **Answer** — just type your answer (a letter or free text). You get the result, a short explanation and a docs link, and the next question follows in the same message.
+- **`end`** — type `end` at any time to finish. You'll be asked whether to save the session to continue later (you name it), and whether to save a study pack (you name it).
+- **`S`** — save a study pack mid-session without ending it.
+- **Auto-save** — progress is saved after every answer, so closing the window abruptly never loses your session.
+
+> Use `end` rather than `X` to finish — `X` closes some CLIs outright.
+
+Every question shows a reminder footer: *Reply with your answer to continue · type **end** to finish · **S** to save a study pack*.
 
 ---
 
@@ -306,6 +322,10 @@ uv run python scripts/generate_readme.py
 ## License
 
 MIT — [Flavia Fauconnet](https://github.com/flavsferr)
+
+Also Available in MCP Rush ↴
+
+[![Stackprep Pro MCP server](https://mcprush.com/badge/stackprep-pro-mcp/card.svg)](https://mcprush.com/to/stackprep-pro-mcp?ref=badge)
 """
 
 
