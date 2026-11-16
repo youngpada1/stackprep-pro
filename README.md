@@ -255,3 +255,5 @@ uv run python scripts/generate_readme.py
 ## License
 
 MIT — [Flavia Fauconnet](https://github.com/flavsferr)
+
+[![Stackprep Pro MCP server](https://mcprush.com/badge/stackprep-pro-mcp/card.svg)](https://mcprush.com/to/stackprep-pro-mcp?ref=badge)
