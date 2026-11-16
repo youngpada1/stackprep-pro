@@ -256,4 +256,6 @@ uv run python scripts/generate_readme.py
 
 MIT — [Flavia Fauconnet](https://github.com/flavsferr)
 
+Also Available in MCP Rush ↴
+
 [![Stackprep Pro MCP server](https://mcprush.com/badge/stackprep-pro-mcp/card.svg)](https://mcprush.com/to/stackprep-pro-mcp?ref=badge)
